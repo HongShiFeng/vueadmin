@@ -28,13 +28,13 @@
 
 <script>
 // 导入axios
-import {login} from "../api/http";
+import { login } from "../api/http";
 
 export default {
   name: "login",
   data() {
     return {
-      ruleForm: { username: "admin", password: "123456" },
+      ruleForm: { username: "admin", password: "" },
       rules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
@@ -57,15 +57,20 @@ export default {
     submitForm(formName) {
       this.$refs["ruleForm"].validate(valid => {
         if (valid) {
-          alert("submit!");
+          login(this.ruleForm).then(res => {
+            // console.log(res);
 
-          login(this.ruleForm).then(res =>{
-            console.log(res);
-            
-          })
-        
+            if (res.data.meta.status == 200) {
+              this.$message.success(res.data.meta.msg);
+              //跳转之前保存token
+              window.localStorage.setItem('token',res.data.data.token );
+              //跳转到主页
+              this.$router.push("/index");
+            } else {
+              this.$message.error(res.data.meta.msg);
+            }
+          });
         } else {
-          //console.log('error submit!!');
           return false;
         }
       });
