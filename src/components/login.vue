@@ -27,35 +27,49 @@
 </template>
 
 <script>
+// 导入axios
+import {login} from "../api/http";
+
 export default {
-  name:'login',
+  name: "login",
   data() {
     return {
-      ruleForm:{username:'',password:''},
-       rules:{
+      ruleForm: { username: "admin", password: "123456" },
+      rules: {
         username: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 10 个字符', trigger: 'change' }
-          ],
-           password: [
-           { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 16 个字符', trigger: 'blur' }
-          ],
-       }
-      };
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          {
+            min: 3,
+            max: 5,
+            message: "长度在 3 到 10 个字符",
+            trigger: "change"
+          }
+        ],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { min: 3, max: 16, message: "长度在 3 到 16 个字符", trigger: "blur" }
+        ]
+      }
+    };
   },
   methods: {
     //提交
-       submitForm(formName) {
-        this.$refs['ruleForm'].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
+    submitForm(formName) {
+      this.$refs["ruleForm"].validate(valid => {
+        if (valid) {
+          alert("submit!");
+
+          login(this.ruleForm).then(res =>{
+            console.log(res);
+            
+          })
+        
+        } else {
+          //console.log('error submit!!');
+          return false;
+        }
+      });
+    }
   }
 };
 </script>
@@ -72,13 +86,13 @@ export default {
     padding: 50px;
     padding-bottom: 0px;
     width: 400px;
-    height:420px;
+    height: 420px;
     background: white;
     h2 {
       margin-bottom: 30px;
       text-align: center;
     }
-    .my-loginbtn{
+    .my-loginbtn {
       width: 100%;
     }
   }
