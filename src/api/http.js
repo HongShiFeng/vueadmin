@@ -11,11 +11,38 @@ const http = axios.create({
 })
 
 export default http;
-
-export const login = ({username,password}) => {
+//登录请求
+export const login = ({
+  username,
+  password
+}) => {
   return http.post("login", {
     username,
     password
   });
-
 }
+//左侧菜单获取
+export const menus = () => {
+
+    return http.get("menus", {
+      headers: {
+        Authorization: window.localStorage.getItem('token')
+      }
+    })
+  } 
+  //users请求
+  export const users = ({query, pagenum, pagesize}) => {
+
+    return http.get("users", {
+      params:{
+        query,
+        pagenum,
+        pagesize
+      },
+        headers: {
+          Authorization: window.localStorage.getItem('token')
+        }
+      }
+
+    )
+  }

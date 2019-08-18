@@ -7,11 +7,17 @@ import VueRouter from 'vue-router'
 //导入组件
 import login from "./components/login.vue"
 import index from "./components/index.vue"
+import users from "./components/userList.vue"
 //定义路由
 const routes = [
   { path: "/login", component: login },
-  { path: "/index", component: index },
-  { path: '/', redirect: '/login' }
+  { path: '/', redirect: '/login' },
+  { path: "/index", component: index ,
+            children:[
+              {path:"users", component:users }
+            ]
+   },
+ 
 ]
 //路由规则
 // 创建 router 实例，然后传 `routes` 配置
