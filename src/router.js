@@ -8,38 +8,51 @@ import VueRouter from 'vue-router'
 import login from "./components/login.vue"
 import index from "./components/index.vue"
 import users from "./components/userList.vue"
+import rights from "./components/rights.vue"
+import roles from "./components/roles.vue"
 //定义路由
-const routes = [
-  { path: "/login", component: login },
-  { path: '/', redirect: '/login' },
-  { path: "/index", component: index ,
-            children:[
-              {path:"users", component:users }
-            ]
-   },
- 
+const routes = [{
+    path: "/login", component: login
+  },
+  {
+    path: '/', redirect: '/login'
+  },
+  {
+    path: "/index", component: index, children: [
+      { path: "/users",component: users},
+      { path: "/rights",component: rights},
+      { path: "/roles",component: roles}
+    ],
+
+
+
+  }
+
+
+
+
 ]
 //路由规则
 // 创建 router 实例，然后传 `routes` 配置
 const router = new VueRouter({
-    routes
+  routes
 })
 
 //导航守卫
 router.beforeEach((to, from, next) => {
-  if(to.path.indexOf('index') != -1 ){
-       //去首页判断是否带token
-       if(window.localStorage.getItem('token')){
-        // 有值放行
-         next();
-       } else {
-         Vue.prototype.$message.error('请先登录!');
-         router.push('/login')
-       }
-  } else {      
-       //不去首页放行
-   next();
+  if (to.path.indexOf('index') != -1) {
+    //去首页判断是否带token
+    if (window.localStorage.getItem('token')) {
+      // 有值放行
+      next();
+    } else {
+      Vue.prototype.$message.error('请先登录!');
+      router.push('/login')
+    }
+  } else {
+    //不去首页放行
+    next();
   }
- })
+})
 
- export default  router ;
+export default router;

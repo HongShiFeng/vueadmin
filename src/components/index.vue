@@ -2,19 +2,19 @@
   <el-container class="index">
     <el-header class="my-header" style="height:77px">
       <img src="../assets/img/logo.png" alt />
-      <h1>周木木后宫管理</h1>
+      <h1>周木木管理</h1>
       <a href="#" @click.prevent="tologin">退出</a>
     </el-header>
     <el-container>
       <el-aside width="200px">
         <div>
           <el-menu class="el-menu-vertical-demo" unique-opened router>
-            <el-submenu v-for="(item,index) in menusList" :key="index" :index="index">
+            <el-submenu v-for="(item,index) in menusList" :key="index"  :index=" '' +index">
               <template slot="title">
                 <i class="el-icon-location"></i>
                 <span>{{item.authName}}</span>
               </template>
-              <el-menu-item :index="'/index/' + sunItem.path" v-for="(sunItem,index) in item.children" :key="index">
+              <el-menu-item  v-for="(sunItem,index1) in item.children" :key="index1" :index="sunItem.path">
                 <i class="el-icon-menu"></i>
                 {{sunItem.authName}}
               </el-menu-item>
